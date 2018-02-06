@@ -1,15 +1,15 @@
 <?php
-    
+    include 'dbconnection.php';
 ?>
 <html>
 
 <head>
 	<title>Book Information</title>
-    <link href="assets/css/reg.css" rel="stylesheet">
+    <link href="reg.css" rel="stylesheet">
 </head>
 
 <body>
-	<form action="" method="post">
+	<form action="insertBook.php" method="post">
 	<h1>Library Database</h1>
 	<fieldset>
 		<legend>Book Information</legend>
@@ -32,18 +32,29 @@
             </thead>
             <tbody>
                 <?php
-                
+                $result = mysqli_query($conn, "SELECT * FROM books");
+                  while( $row = mysqli_fetch_assoc( $result ) ){
+                    echo
+                    "<tr>
+                      <td contenteditable>{$row['Title']}</td>
+                      <td contenteditable>{$row['Pages']}</td>
+                      <td contenteditable>{$row['Author']}</td>
+                      <td contenteditable>{$row['Published Year']}</td>
+                      <td><button value='Edit'>Edit</button></td>
+                    </tr>\n";
+                  }
                 ?>
             </tbody>
         </table>
 	</form>
-    <script type="text/javascript" src="assets/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="jquery-1.10.2.js"></script>
 	<script type="text/javascript">
 		function submit_form(){
 			alert("A new book has been successfully added!");
 		}
 	</script>
 <?php 
-    $dbconn->close();
+    $conn->close(); 
+?>
 </body>
 </html>
